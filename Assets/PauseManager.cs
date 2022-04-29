@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class PauseManager : MonoBehaviour
 {
@@ -48,7 +49,7 @@ public class PauseManager : MonoBehaviour
             foreach (var button in Buttons)
             {
                 button.gameObject.SetActive(true);
-                if (button.localScale.magnitude<1)
+                if (button.localScale.x<1)
                 {
                     button.localScale += new Vector3(0.01f, 0.01f, 0.01f);
                 }
@@ -60,9 +61,9 @@ public class PauseManager : MonoBehaviour
         }
         else
         {
-            if (blackoutSprite.color.a >= 0.75f)
+            if (blackoutSprite.color.a >=0f)
             {
-                blackoutSprite.color -= new Color(0, 0, 0, 0.01f);
+                blackoutSprite.color -= new Color(0, 0, 0, 0.05f);
             }
             else
             {
@@ -78,10 +79,9 @@ public class PauseManager : MonoBehaviour
             }
             foreach (var button in Buttons)
             {
-                button.gameObject.SetActive(true);
-                if (button.localScale.magnitude>=1)
+                if (button.localScale.x>=0.01f)
                 {
-                    button.localScale -= new Vector3(0.01f, 0.01f, 0.01f);
+                    button.localScale -= new Vector3(0.05f, 0.05f, 0.05f);
                 }
                 else
                 {
@@ -104,5 +104,16 @@ public class PauseManager : MonoBehaviour
     public void SetPaused(bool paused)
     {
         _paused = paused;
+    }
+    
+    public void QuitGame()
+    {
+        Debug.Log("Quit");
+        Application.Quit();
+    }
+    public void BackToMenu()
+    {
+        Debug.Log("Back");
+        SceneManager.LoadScene(0);
     }
 }

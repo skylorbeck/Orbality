@@ -42,6 +42,10 @@ public class ScoreManager : MonoBehaviour
     public void AddScore(int amount)
     {
         score += amount;
+        if (score <0)
+        {
+            score = 0;
+        }
         if (score > highScore)
         {
             highScore = score;
