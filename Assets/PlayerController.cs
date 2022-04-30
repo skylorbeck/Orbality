@@ -16,6 +16,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private Vector3 startingPos = Vector3.zero;
     [SerializeField] bool awake = false;
     [SerializeField] bool hasShot = false;
+    bool _cleanShot = true;
     [SerializeField] private float speed = 100f;
     [SerializeField] private float multiplier = 5f;
     [SerializeField] private float maxLen = 1000f;
@@ -125,6 +126,7 @@ public class PlayerController : MonoBehaviour
         RandomizeStartingPos();
         transform.position = startingPos;
         awake = false;
+        _cleanShot = true;
         hasShot = false;
         _rb.velocity = Vector2.zero;
         _rb.rotation = 0;
@@ -144,4 +146,15 @@ public class PlayerController : MonoBehaviour
             startingPos = new Vector3(_random.NextInt(X[0],X[1]), _random.NextInt(Y[0],Y[1]), 0);
         }
     }
+
+    private void OnCollisionEnter2D(Collision2D col)
+    {
+        _cleanShot = false;
+    }
+    
+    public bool GetCleanShot()
+    {
+        return _cleanShot;
+    }
+    
 }

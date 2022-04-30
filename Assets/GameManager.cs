@@ -48,7 +48,7 @@ public class GameManager : MonoBehaviour
     {
         if (!won)
         {
-            ScoreManager.Instance.AddScore(-5);
+            ScoreManager.Instance.LosePoints(5);
         }
         pegManager.Reset(won);
         player.Reset();

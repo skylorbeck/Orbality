@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8643257715767668465}
   - component: {fileID: 8643257715767668464}
+  - component: {fileID: 305563172900072825}
   m_Layer: 0
   m_Name: GameManager
   m_TagString: Untagged
@@ -50,3 +51,19 @@ MonoBehaviour:
   goal: {fileID: 0}
   random:
     state: 0
+--- !u!114 &305563172900072825
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8643257715767668467}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3b7c6ba45a3340368b1b5b0216de151d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  score: 0
+  highScore: 0
+  scoreText: {fileID: 0}
+  highScoreText: {fileID: 0}

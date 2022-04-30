@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 using Random = Unity.Mathematics.Random;
 
@@ -48,11 +49,10 @@ public class GoalScript : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D col)
     {
-        if (col.gameObject.CompareTag("Player"))
-        {
-            ScoreManager.Instance.AddScore(1);
-            Debug.Log("Goal");
-            _hasWon = true;
-        }
+        if (!col.gameObject.CompareTag("Player") || _hasWon) return;
+        PlayerController pc = col.GetComponent<PlayerController>();
+        ScoreManager.Instance.AddScore(pc.GetCleanShot()?2:1);
+        Debug.Log("Goal");
+        _hasWon = true;
     }
 }
