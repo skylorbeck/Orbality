@@ -1,11 +1,14 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using Unity.Mathematics;
 using UnityEngine;
 using Random = Unity.Mathematics.Random;
 
 public class PegManager : MonoBehaviour
 {
+    [SerializeField] private int2[] pegPositions;
+
     bool _isSimulation = false;
     private Random _random;
     [SerializeField] private bool doRandomize = false;
@@ -27,6 +30,21 @@ public class PegManager : MonoBehaviour
                 _pegs.Add(Instantiate(pegPrefab, transform.position, Quaternion.identity, transform).transform);
             }
             RandomizeAndSyncPegs();
+        }
+        else
+        {
+            for (int i = 0; i < pegPositions.Length; i++)
+            {
+                Transform peg = Instantiate(pegPrefab, transform.position, Quaternion.identity, transform).transform;
+                peg.localPosition = new Vector3(pegPositions[i].x, pegPositions[i].y, 0);
+                peg.GetComponent<Renderer>().enabled = true;
+                _pegs.Add(peg.transform);
+            }
+
+            if (_isSimulation)
+            {
+                SyncPegs();
+            }
         }
     }
 

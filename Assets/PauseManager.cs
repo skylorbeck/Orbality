@@ -39,7 +39,7 @@ public class PauseManager : MonoBehaviour
             
             if (Time.timeScale >0.1f)
             {
-                Time.timeScale -= Time.timeScale * 0.01f;
+                Time.timeScale -= 0.01f;
             }
             else
             {

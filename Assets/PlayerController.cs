@@ -29,6 +29,8 @@ public class PlayerController : MonoBehaviour
     [SerializeField]private bool doRandomize = false;
     private Rigidbody2D _rb;
     private Unity.Mathematics.Random _random;
+    private Material _material;
+    private ParticleSystem _particleSystem;
 
     void Start()
     {
@@ -38,7 +40,8 @@ public class PlayerController : MonoBehaviour
         startingPos = transform.position;
         RandomizeStartingPos();
         _rb.Sleep();
-
+        _material = GetComponent<SpriteRenderer>().material;
+        _particleSystem = GetComponent<ParticleSystem>();
     }
 
     private void FixedUpdate()
@@ -127,6 +130,11 @@ public class PlayerController : MonoBehaviour
         _rb.rotation = 0;
         _rb.angularVelocity = 0;
         waitTime = 0f;
+        float score = ScoreManager.Instance.score * 0.1f;
+        _material.SetFloat("_Score", score);
+        var emission = _particleSystem.emission;
+        emission.rateOverTime = score;
+        emission.rateOverDistance = score;
     }
     
     public void RandomizeStartingPos()
