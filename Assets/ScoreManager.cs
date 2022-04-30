@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class ScoreManager : MonoBehaviour
 {
@@ -18,16 +19,19 @@ public class ScoreManager : MonoBehaviour
     [SerializeField]private TextMeshProUGUI highScoreText;
     [SerializeField]private TextMeshProUGUI comboText;
     [SerializeField]private TextMeshProUGUI comboTimerText;
+    [SerializeField]private TextMeshProUGUI comboBreakText;
     [SerializeField]private RectTransform comboBar;
+    private Image _comboBarImage;
 
 
     private void Update()
     {
         scoreText.text = "Score: " + score;
         highScoreText.text = "High Score: " + highScore;
-        comboBar.localScale = new Vector3(comboTimer/comboTimerMax, 1, 1);
+        comboBar.localScale = new Vector3(comboTimer/comboTimerMax, comboTimer>0?Math.Min(comboTimerMax/comboTimer,3) :1, 1);
+        _comboBarImage.color = Color.Lerp(Color.red,Color.white, comboTimer/comboTimerMax);
 
-        if (combo>0)
+        if (combo>1)
         {
             comboText.enabled = true;
             comboText.text = combo + "x Combo!";
@@ -39,9 +43,8 @@ public class ScoreManager : MonoBehaviour
                 comboTimer -= Time.deltaTime;
                 comboTimerText.text = comboTimer.ToString("F2");
                 break;
-            case <= 0:
-                combo = 0;
-                comboTimerText.text = "";
+            case < 0:
+                ResetCombo();
                 break;
         }
     }
@@ -64,6 +67,7 @@ public class ScoreManager : MonoBehaviour
         combo = 0;
         comboTimer = 0;
         highScore = PlayerPrefs.GetInt("HighScore", 0);
+        _comboBarImage = comboBar.GetComponent<Image>();
     }
 
     public void AddScore(int amount)
@@ -103,7 +107,12 @@ public class ScoreManager : MonoBehaviour
 
     public void ResetCombo()
     {
+        if (combo>1)
+        {
+            comboBreakText.gameObject.GetComponent<Animator>().SetTrigger("pop");
+        }
         combo = 0;
         comboTimer = 0;
+        comboTimerText.text = "";
     }
 }
