@@ -108,12 +108,10 @@ public class PauseManager : MonoBehaviour
     
     public void QuitGame()
     {
-        Debug.Log("Quit");
-        Application.Quit();
+        MenuManager.Instance.QuitGame();
     }
     public void BackToMenu()
     {
-        Debug.Log("Back");
-        SceneManager.LoadScene(0);
+        MenuManager.Instance.LoadLevel(0);
     }
 }

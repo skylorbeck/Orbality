@@ -65,5 +65,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   score: 0
   highScore: 0
+  combo: 0
+  comboTimer: 0
+  comboTimerMax: 5
   scoreText: {fileID: 0}
   highScoreText: {fileID: 0}
+  comboText: {fileID: 0}
+  comboTimerText: {fileID: 0}
+  comboBreakText: {fileID: 0}
+  comboBar: {fileID: 0}
