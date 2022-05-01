@@ -12,6 +12,7 @@ public class PhysicsSimulator : MonoBehaviour
     private PlayerController _ballPC;
     private PlayerPreviewer _ballPreviewer;
     private Transform _simBall;
+    private PlayerController _simBallPC;
     private Rigidbody2D _simBallRb;
     private PegManager _simPegManager;
     [SerializeField] private int predictionLength = 10;
@@ -23,6 +24,7 @@ public class PhysicsSimulator : MonoBehaviour
     private GoalScript _simGoal;
     public bool _previewing = true;
     private Transform _collidedBall;
+    private Renderer _collidedBallRenderer;
 
 
     void Start()
@@ -38,7 +40,8 @@ public class PhysicsSimulator : MonoBehaviour
         if (_ballPC!= null)
         {
             _previewing = false;
-            _simBall.GetComponent<PlayerController>().enabled = false;
+            _simBallPC = _simBall.GetComponent<PlayerController>();
+            _simBallPC.enabled = false;
         }
         else
         {
@@ -88,7 +91,8 @@ public class PhysicsSimulator : MonoBehaviour
         }
 
         _collidedBall = Instantiate(collidedBall).transform;
-
+        _collidedBall.transform.position = new Vector3(-1000,-1000, -1000);
+        _collidedBallRenderer = _collidedBall.GetComponent<Renderer>();
     }
 
     // Update is called once per frame
@@ -103,20 +107,36 @@ public class PhysicsSimulator : MonoBehaviour
             _simBallRb.angularVelocity = 0;
             _simBallRb.AddForce(_force);
             _simBallRb.AddTorque(_torque);
-            for (int i = 0; i < predictionLength; i++)
+            bool collided = false;
+            _lineRenderer.positionCount = predictionLength;
+            int lineLen = predictionLength;
+            for (int i = 0; i < lineLen; i++)
             {
                 _physicsScene.Simulate(Time.fixedDeltaTime);
                 _lineRenderer.SetPosition(i, _simBall.position);
                 if (_previewing && _ballPreviewer.Collided())
                 {
+                    collided = true;
                     _collidedBall.position = _ballPreviewer.GetCollisionPoint();
-                    _collidedBall.GetComponent<Renderer>().enabled = true;
+                } else if (!_previewing && _simBallPC.Collided())
+                {
+                    collided = true;
+                    lineLen-= 10;
+                    _collidedBall.position = _simBallPC.GetCollisionPoint();
                 }
             }
+            if(!collided)
+            {
+                _collidedBall.position = _simBall.position;
+            }
+            _lineRenderer.positionCount = lineLen;
+            _collidedBallRenderer.enabled = true;
+
         }
         else
         {
             _lineRenderer.enabled = false;
+            _collidedBallRenderer.enabled = false;
         }
     }
 

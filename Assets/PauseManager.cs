@@ -112,6 +112,8 @@ public class PauseManager : MonoBehaviour
     }
     public void BackToMenu()
     {
+        _paused = false;
+        Time.timeScale = 1f;
         MenuManager.Instance.LoadLevel(0);
     }
 }

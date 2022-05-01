@@ -48,7 +48,10 @@ public class PlayerPreviewer : MonoBehaviour
 
         SetForce();
         _rb.Sleep();
+       
     }
+
+
 
     void SetForce()
     {
@@ -84,6 +87,7 @@ public class PlayerPreviewer : MonoBehaviour
     
     public Vector2 GetCollisionPoint()
     {
+        _collided = false;
         return _collisionPoint;
     }
 }

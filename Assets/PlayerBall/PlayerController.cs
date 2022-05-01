@@ -33,6 +33,8 @@ public class PlayerController : MonoBehaviour
     private Unity.Mathematics.Random _random;
     private Material _material;
     private ParticleSystem _particleSystem;
+    private bool _collided;
+    private Vector2 _collisionPoint = Vector2.zero;
 
     void Start()
     {
@@ -56,6 +58,7 @@ public class PlayerController : MonoBehaviour
                 GameManager.Instance.Reset(false);
             }
         }
+       
     }
 
     void Update()
@@ -150,6 +153,11 @@ public class PlayerController : MonoBehaviour
 
     private void OnCollisionEnter2D(Collision2D col)
     {
+        if (CompareTag("Simulated"))
+        {
+                _collided = true;
+                _collisionPoint = transform.position;
+        }
         _cleanShot = false;
     }
     
@@ -157,5 +165,15 @@ public class PlayerController : MonoBehaviour
     {
         return _cleanShot;
     }
+    public bool Collided()
+    {
+        return _collided;
+    }
     
+    public Vector2 GetCollisionPoint()
+    {
+        _collided = false;
+        return _collisionPoint;
+        
+    }
 }

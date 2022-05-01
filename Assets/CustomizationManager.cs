@@ -13,6 +13,9 @@ public class CustomizationManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            MenuManager.Instance.LoadLevel(0);
+        }
     }
 }

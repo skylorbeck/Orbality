@@ -66,7 +66,7 @@ public class ScoreManager : MonoBehaviour
         score = 0;
         combo = 0;
         comboTimer = 0;
-        highScore = PlayerPrefs.GetInt("HighScore", 0);
+        highScore = SaveManager.Instance.saveData.highScore;
         _comboBarImage = comboBar.GetComponent<Image>();
     }
 
@@ -82,10 +82,11 @@ public class ScoreManager : MonoBehaviour
         {
             score = 0;
         }
+
         if (score > highScore)
         {
             highScore = score;
-            PlayerPrefs.SetInt("HighScore", highScore);
+            SaveManager.Instance.saveData.highScore = highScore;
         }
     }
     

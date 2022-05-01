@@ -7,7 +7,7 @@ using UnityEngine;
 public class SaveManager : MonoBehaviour
 {
     public static SaveManager Instance;
-    private SaveData saveData = new SaveData();
+    public SaveData saveData = new SaveData();
     private void Start()
     {
         if (Instance == null)
@@ -29,8 +29,7 @@ public class SaveManager : MonoBehaviour
     public void SaveGame()
     {
         String saveJson = JsonUtility.ToJson(saveData);
-        StreamWriter writer = new StreamWriter(Application.persistentDataPath + "/save.json");
-        writer.Write(saveJson);
+        File.WriteAllBytes(Application.persistentDataPath + "/save.json", System.Text.Encoding.UTF8.GetBytes(saveJson));
     }
     
     public class SaveData
