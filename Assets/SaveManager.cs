@@ -36,5 +36,79 @@ public class SaveManager : MonoBehaviour
     {
         public int ballSkin = 0;
         public int highScore = 0;
+        public int guideSkin = 0;
+        public int glowSkin = 0;
+        public int particleSkin = 0;
+        public int colliderSkin = 0;
+    }
+    
+    public int GetBallSkin()
+    {
+        return saveData.ballSkin;
+    }
+    
+    public int GetHighScore()
+    {
+        return saveData.highScore;
+    }
+    
+    public int GetGuideSkin()
+    {
+        return saveData.guideSkin;
+    }
+    
+    public int GetGlowSkin()
+    {
+        return saveData.glowSkin;
+    }
+    
+    public int GetParticleSkin()
+    {
+        return saveData.particleSkin;
+    }
+    
+    public int GetColliderSkin()
+    {
+        return saveData.colliderSkin;
+    }
+    
+    public void SetBallSkin(int skin)
+    {
+        saveData.ballSkin = skin;
+    }
+    
+    public void SetHighScore(int score)
+    {
+        saveData.highScore = score;
+    }
+    
+    public void SetGuideSkin(int skin)
+    {
+        saveData.guideSkin = skin;
+    }
+    
+    public void SetGlowSkin(int skin)
+    {
+        saveData.glowSkin = skin;
+    }
+    
+    public void SetParticleSkin(int skin)
+    {
+        saveData.particleSkin = skin;
+    }
+    
+    public void SetColliderSkin(int skin)
+    {
+        saveData.colliderSkin = skin;
+    }
+    
+    public void Reset()
+    {
+        saveData.ballSkin = 0;
+        saveData.highScore = 0;
+        saveData.guideSkin = 0;
+        saveData.glowSkin = 0;
+        saveData.particleSkin = 0;
+        saveData.colliderSkin = 0;
     }
 }

@@ -6,6 +6,7 @@ using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.SceneManagement;
+using UnityEngine.VFX;
 using Random = UnityEngine.Random;
 
 public class PlayerPreviewer : MonoBehaviour
@@ -23,7 +24,7 @@ public class PlayerPreviewer : MonoBehaviour
     private float _torque = 0f;
     private Rigidbody2D _rb;
     private Material _material;
-    private ParticleSystem _particleSystem;
+    private VisualEffect _vfx;
     private bool _isSimulated = false;
     private bool _collided = false;
 
@@ -36,7 +37,7 @@ public class PlayerPreviewer : MonoBehaviour
         startingPos = transform.position;
         _rb.Sleep();
         _material = GetComponent<SpriteRenderer>().material;
-        _particleSystem = GetComponent<ParticleSystem>();
+        _vfx = GetComponent<VisualEffect>();
     }
 
     void Update()
@@ -64,11 +65,11 @@ public class PlayerPreviewer : MonoBehaviour
         _isSimulated = CompareTag("Simulated");
         if (_isSimulated) return;
         _material = GetComponent<SpriteRenderer>().material;
-        _particleSystem = GetComponent<ParticleSystem>();
         _material.SetFloat("_Score", 10);
-        var emission = _particleSystem.emission;
-        emission.rateOverTime = 10;
-        emission.rateOverDistance = 10;
+        _vfx = GetComponent<VisualEffect>();
+
+        _vfx.SetInt("Multiplier", 5);
+        _vfx.SetFloat("Velocity", 5);
     }
 
     private void OnCollisionEnter2D(Collision2D col)

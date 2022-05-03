@@ -20,6 +20,7 @@ public class ScoreManager : MonoBehaviour
     [SerializeField]private TextMeshProUGUI comboText;
     [SerializeField]private TextMeshProUGUI comboTimerText;
     [SerializeField]private TextMeshProUGUI comboBreakText;
+    [SerializeField] private TextMeshProUGUI _pointsText;
     [SerializeField]private RectTransform comboBar;
     private Image _comboBarImage;
 
@@ -41,7 +42,10 @@ public class ScoreManager : MonoBehaviour
         {
             case > 0:
                 comboTimer -= Time.deltaTime;
-                comboTimerText.text = comboTimer.ToString("F2");
+                string seconds = (comboTimer % 60).ToString("00");
+                string milliseconds = ((comboTimer * 1000) % 1000).ToString("000");
+                comboTimerText.text =(seconds + ":" + milliseconds);
+                comboTimerText.color = Color.Lerp(Color.red,Color.white, comboTimer/comboTimerMax);
                 break;
             case < 0:
                 ResetCombo();
@@ -66,7 +70,7 @@ public class ScoreManager : MonoBehaviour
         score = 0;
         combo = 0;
         comboTimer = 0;
-        highScore = SaveManager.Instance.saveData.highScore;
+        highScore = SaveManager.Instance.GetHighScore();
         _comboBarImage = comboBar.GetComponent<Image>();
     }
 
@@ -74,10 +78,14 @@ public class ScoreManager : MonoBehaviour
     {
         if (amount> 0)
         {
+            int points = amount * Math.Max(1,combo);
+            score += points;
+            _pointsText.transform.position = GameManager.Instance.goal.transform.position*0.75f;
+            _pointsText.text = "+" + points;
+                _pointsText.GetComponent<Animator>().SetTrigger("pop");
             combo++;
             comboTimer = comboTimerMax;
         }
-        score += amount * combo;
         if (score <0)
         {
             score = 0;
@@ -86,7 +94,7 @@ public class ScoreManager : MonoBehaviour
         if (score > highScore)
         {
             highScore = score;
-            SaveManager.Instance.saveData.highScore = highScore;
+            SaveManager.Instance.SetHighScore( highScore);
         }
     }
     

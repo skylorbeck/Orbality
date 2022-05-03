@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using Random = UnityEngine.Random;
@@ -13,7 +14,8 @@ public class GameManager : MonoBehaviour
     [SerializeField] public PhysicsSimulator physicsSimulator;
     [SerializeField] public GameObject goal;
     [SerializeField] private Unity.Mathematics.Random random;
-    
+    [SerializeField] private float timeLeft = 60f;
+    [SerializeField] private TextMeshProUGUI timeText;
     private void Start()
     {
         random = new Unity.Mathematics.Random((uint)DateTime.Now.Millisecond);
@@ -29,8 +31,16 @@ public class GameManager : MonoBehaviour
 
     private void Update()
     {
-        
-        
+        timeLeft -= Time.deltaTime;
+        if (timeLeft < 0)
+        {
+            timeLeft = 0;
+           PauseManager.Instance.BackToMenu();
+        }
+        string minutes = Mathf.Floor(timeLeft / 60).ToString("00");
+        string seconds = (timeLeft % 60).ToString("00");
+        string milliseconds = ((timeLeft * 1000) % 1000).ToString("000");
+        timeText.text = minutes + ":" + seconds + ":" + milliseconds;
         if (Input.GetKeyDown(KeyCode.R))
         {
             Reset(false);

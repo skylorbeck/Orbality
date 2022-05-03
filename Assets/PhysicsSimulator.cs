@@ -118,10 +118,10 @@ public class PhysicsSimulator : MonoBehaviour
                 {
                     collided = true;
                     _collidedBall.position = _ballPreviewer.GetCollisionPoint();
-                } else if (!_previewing && _simBallPC.Collided())
+                } else if (!_previewing && _simBallPC.Collided() && !collided)
                 {
                     collided = true;
-                    lineLen-= 10;
+                    lineLen -= 10;
                     _collidedBall.position = _simBallPC.GetCollisionPoint();
                 }
             }

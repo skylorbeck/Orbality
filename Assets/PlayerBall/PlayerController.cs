@@ -6,6 +6,7 @@ using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.SceneManagement;
+using UnityEngine.VFX;
 using Random = UnityEngine.Random;
 
 public class PlayerController : MonoBehaviour
@@ -32,9 +33,9 @@ public class PlayerController : MonoBehaviour
     private Rigidbody2D _rb;
     private Unity.Mathematics.Random _random;
     private Material _material;
-    private ParticleSystem _particleSystem;
     private bool _collided;
     private Vector2 _collisionPoint = Vector2.zero;
+    private VisualEffect _vfx;
 
     void Start()
     {
@@ -45,7 +46,7 @@ public class PlayerController : MonoBehaviour
         RandomizeStartingPos();
         _rb.Sleep();
         _material = GetComponent<SpriteRenderer>().material;
-        _particleSystem = GetComponent<ParticleSystem>();
+        _vfx = GetComponent<VisualEffect>();
     }
 
     private void FixedUpdate()
@@ -64,7 +65,8 @@ public class PlayerController : MonoBehaviour
     void Update()
     {
         SetForce();
-        
+        _vfx.SetFloat("Velocity", Math.Max( _rb.velocity.magnitude,1f));
+
         if (!GetAwake())
         {
             _rb.Sleep();
@@ -136,11 +138,9 @@ public class PlayerController : MonoBehaviour
         _rb.rotation = 0;
         _rb.angularVelocity = 0;
         waitTime = 0f;
-        float score = ScoreManager.Instance.score * 0.1f;
+        float score = ScoreManager.Instance.combo * 0.1f;
         _material.SetFloat("_Score", score);
-        var emission = _particleSystem.emission;
-        emission.rateOverTime = score;
-        emission.rateOverDistance = score;
+        _vfx.SetInt("Multiplier", ScoreManager.Instance.combo-1);
     }
     
     public void RandomizeStartingPos()
@@ -169,10 +169,14 @@ public class PlayerController : MonoBehaviour
     {
         return _collided;
     }
+    public void setCollided(bool collided)
+    {
+        _collided = collided;
+    }
     
     public Vector2 GetCollisionPoint()
     {
-        _collided = false;
+        setCollided(false);
         return _collisionPoint;
         
     }
