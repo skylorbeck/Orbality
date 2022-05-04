@@ -6,7 +6,6 @@ public class EndGameManager : MonoBehaviour
 {
     private bool _gameOver;
 
-    [SerializeField] private SpriteRenderer blackoutSprite;
     [SerializeField] private Transform[] Buttons;
     [SerializeField] private TextMeshProUGUI ScoreText;
     private Transform ScoreTextTransform;
@@ -20,24 +19,6 @@ public class EndGameManager : MonoBehaviour
     {
         if (_gameOver)
         {
-            if (blackoutSprite.color.a < 0.75f)
-            {
-                blackoutSprite.color += new Color(0, 0, 0, 0.01f);
-            }
-            else
-            {
-                blackoutSprite.color = new Color(0, 0, 0, 0.75f);
-            }
-
-            if (Time.timeScale > 0.1f)
-            {
-                Time.timeScale -= 0.01f;
-            }
-            else
-            {
-                Time.timeScale = 0;
-            }
-
             foreach (var button in Buttons)
             {
                 button.gameObject.SetActive(true);
@@ -62,24 +43,6 @@ public class EndGameManager : MonoBehaviour
         }
         else
         {
-            if (blackoutSprite.color.a >= 0f)
-            {
-                blackoutSprite.color -= new Color(0, 0, 0, 0.05f);
-            }
-            else
-            {
-                blackoutSprite.color = new Color(0, 0, 0, 0f);
-            }
-
-            if (Time.timeScale < 1)
-            {
-                Time.timeScale += Math.Min(0.01f, 1 - Time.timeScale);
-            }
-            else
-            {
-                Time.timeScale = 1f;
-            }
-
             foreach (var button in Buttons)
             {
                 if (button.localScale.x >= 0.01f)
@@ -108,11 +71,7 @@ public class EndGameManager : MonoBehaviour
     {
         _gameOver = !_gameOver;
     }
-
-    public bool IsPaused()
-    {
-        return _gameOver;
-    }
+    
 
     public void SetGameover(bool gameOver)
     {

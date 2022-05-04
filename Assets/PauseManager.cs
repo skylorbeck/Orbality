@@ -7,9 +7,12 @@ using UnityEngine.SceneManagement;
 public class PauseManager : MonoBehaviour
 {
     public static PauseManager Instance;
-    private bool _paused;
+    public bool _paused;
     [SerializeField] public SpriteRenderer blackoutSprite;
     [SerializeField] public Transform[] Buttons;
+
+    private bool onlyBlackout = false;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -36,26 +39,29 @@ public class PauseManager : MonoBehaviour
             {
                 blackoutSprite.color = new Color(0, 0, 0, 0.75f);
             }
-            
-            if (Time.timeScale >0.1f)
-            {
-                Time.timeScale -= 0.01f;
-            }
-            else
-            {
-                Time.timeScale = 0;
-            }
 
-            foreach (var button in Buttons)
+            if (!onlyBlackout)
             {
-                button.gameObject.SetActive(true);
-                if (button.localScale.x<1)
+                if (Time.timeScale > 0.1f)
                 {
-                    button.localScale += new Vector3(0.01f, 0.01f, 0.01f);
+                    Time.timeScale -= 0.01f;
                 }
                 else
                 {
-                    button.localScale = Vector3.one;
+                    Time.timeScale = 0;
+                }
+
+                foreach (var button in Buttons)
+                {
+                    button.gameObject.SetActive(true);
+                    if (button.localScale.x < 1)
+                    {
+                        button.localScale += new Vector3(0.01f, 0.01f, 0.01f);
+                    }
+                    else
+                    {
+                        button.localScale = Vector3.one;
+                    }
                 }
             }
         }
@@ -101,9 +107,19 @@ public class PauseManager : MonoBehaviour
     {
         return _paused;
     }
+    public void SetPaused(bool paused, bool blackout)
+    {
+        onlyBlackout = blackout;
+        _paused = paused;
+    }
     public void SetPaused(bool paused)
     {
         _paused = paused;
+    }
+    
+    public void SetOnlyBlackout(bool blackout)
+    {
+        this.onlyBlackout = blackout;
     }
     
     public void QuitGame()

@@ -37,6 +37,7 @@ public class GameManager : MonoBehaviour
         {
             timeLeft = 0;
            endGameManager.SetGameover(true, ScoreManager.Instance.GetScore());
+           PauseManager.Instance.SetPaused(true,true);
         }
         string minutes = Mathf.Floor(timeLeft / 60).ToString("00");
         string seconds = (timeLeft % 60).ToString("00");
