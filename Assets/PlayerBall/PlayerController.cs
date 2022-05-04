@@ -9,44 +9,25 @@ using UnityEngine.SceneManagement;
 using UnityEngine.VFX;
 using Random = UnityEngine.Random;
 
-public class PlayerController : MonoBehaviour
+public class PlayerController : BallAbstraction
 {
-
-    private Camera _cam;
-
-    [SerializeField] private Vector3 mousePos;
-    [SerializeField] private Vector3 startingPos = Vector3.zero;
     [SerializeField] bool awake = false;
     [SerializeField] bool hasShot = false;
     bool _cleanShot = true;
-    [SerializeField] private float speed = 100f;
-    [SerializeField] private float multiplier = 5f;
-    [SerializeField] private float maxLen = 1000f;
-    [SerializeField] private PhysicsSimulator physicsSimulator;
-    private Vector2 _force = Vector2.zero;
-    private float _torque = 0f;
+  
     [SerializeField]private float waitTime = 0f;
     [SerializeField]private float maxWaitTime = 3f;
     [SerializeField]private int[] X = {-5,5};
     [SerializeField]private int[] Y = {-5,5};
     [SerializeField]private bool doRandomize = false;
-    private Rigidbody2D _rb;
     private Unity.Mathematics.Random _random;
-    private Material _material;
-    private bool _collided;
-    private Vector2 _collisionPoint = Vector2.zero;
-    private VisualEffect _vfx;
 
-    void Start()
+    new void Start()
     {
+        base.Start();
         _random = GameManager.Instance.GetRandom();
-        _cam = Camera.main;
-        _rb = GetComponent<Rigidbody2D>();
-        startingPos = transform.position;
         RandomizeStartingPos();
         _rb.Sleep();
-        _material = GetComponent<SpriteRenderer>().material;
-        _vfx = GetComponent<VisualEffect>();
     }
 
     private void FixedUpdate()
@@ -120,13 +101,7 @@ public class PlayerController : MonoBehaviour
     {
         return hasShot;
     }
-
-    void SetForce()
-    {
-        _force = Vector2.ClampMagnitude((mousePos - transform.position) * speed * multiplier, maxLen * multiplier);
-        physicsSimulator.SetForce(_force, _torque);
-    }
-
+    
     public void Reset()
     {
         RandomizeStartingPos();
@@ -153,7 +128,7 @@ public class PlayerController : MonoBehaviour
 
     private void OnCollisionEnter2D(Collision2D col)
     {
-        if (CompareTag("Simulated"))
+        if (_isSimulated)
         {
                 _collided = true;
                 _collisionPoint = transform.position;
@@ -164,20 +139,5 @@ public class PlayerController : MonoBehaviour
     public bool GetCleanShot()
     {
         return _cleanShot;
-    }
-    public bool Collided()
-    {
-        return _collided;
-    }
-    public void setCollided(bool collided)
-    {
-        _collided = collided;
-    }
-    
-    public Vector2 GetCollisionPoint()
-    {
-        setCollided(false);
-        return _collisionPoint;
-        
     }
 }

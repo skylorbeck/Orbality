@@ -19,16 +19,17 @@ public class CustomizationManager : MonoBehaviour
     [SerializeField] TextMeshProUGUI _particleText;
     [SerializeField] TextMeshProUGUI _colliderText;
     
+    [SerializeField] PlayerPreviewer _ballPreviewer;
 
     // Start is called before the first frame update
     void Start()
     {
-        ChangeBallSkin(SaveManager.Instance.GetBallSkin());
+        _currentBall = SaveManager.Instance.GetBallSkin();
+        _ballText.text = _currentBall.ToString();
         ChangeGuideSkin(SaveManager.Instance.GetGuideSkin());
         ChangeGlowSkin(SaveManager.Instance.GetGlowSkin());
         ChangeParticleSkin(SaveManager.Instance.GetParticleSkin());
         ChangeColliderSkin(SaveManager.Instance.GetColliderSkin());
-
     }
 
     // Update is called once per frame
@@ -45,8 +46,10 @@ public class CustomizationManager : MonoBehaviour
 
     public void ChangeBallSkin(int skin)
     {
-        _currentBall = Math.Clamp(skin, 0, 3);
+        _currentBall = Math.Clamp(skin, 0, _ballPreviewer.TextureCount()-1);
         _ballText.text = _currentBall.ToString();
+        _ballPreviewer.SetBallSkin(_currentBall);
+    
     }
 
     public void ChangeGuideSkin(int skin)

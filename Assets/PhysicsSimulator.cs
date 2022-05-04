@@ -152,4 +152,31 @@ public class PhysicsSimulator : MonoBehaviour
         _simPegManager.Reset(true);
         _simGoal.Reset(false);
     }
+    
+    public PlayerPreviewer GetBallPreviewer()
+    {
+        return _ballPreviewer;
+    }
+    
+    public PlayerController GetBallPC()
+    {
+        return _ballPC;
+    }
+    
+    public PegManager GetPegManager()
+    {
+        return _simPegManager;
+    }
+    
+    public GoalScript GetGoal()
+    {
+        return _simGoal;
+    }
+    
+    public Transform GetSimBall()
+    {
+        return _simBall;
+    }
+    
+    
 }
