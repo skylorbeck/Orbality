@@ -12,6 +12,7 @@ public class GameManager : MonoBehaviour
     [SerializeField] public PegManager pegManager;
     [SerializeField] public PlayerController player;
     [SerializeField] public PhysicsSimulator physicsSimulator;
+    [SerializeField] public EndGameManager endGameManager;
     [SerializeField] public GameObject goal;
     [SerializeField] private Unity.Mathematics.Random random;
     [SerializeField] private float timeLeft = 60f;
@@ -35,7 +36,7 @@ public class GameManager : MonoBehaviour
         if (timeLeft < 0)
         {
             timeLeft = 0;
-           PauseManager.Instance.BackToMenu();
+           endGameManager.SetGameover(true, ScoreManager.Instance.GetScore());
         }
         string minutes = Mathf.Floor(timeLeft / 60).ToString("00");
         string seconds = (timeLeft % 60).ToString("00");
@@ -52,15 +53,26 @@ public class GameManager : MonoBehaviour
         }
     
     }
-    
- 
-    public void Reset(bool won)
+
+    public void NewGame()
     {
-        if (!won)
+        timeLeft = 60f;
+        ScoreManager.Instance.ResetScore();
+        ScoreManager.Instance.ResetCombo();
+        pegManager.Reset(true);
+        player.Reset();
+        physicsSimulator.Reset();
+        PauseManager.Instance.SetPaused(false);
+        endGameManager.SetGameover(false);
+    }
+ 
+    public void Reset(bool scored)
+    {
+        if (!scored)
         {
             ScoreManager.Instance.LosePoints(5);
         }
-        pegManager.Reset(won);
+        pegManager.Reset(scored);
         player.Reset();
         physicsSimulator.Reset();
             PauseManager.Instance.SetPaused(false);

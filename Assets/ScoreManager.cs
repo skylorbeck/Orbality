@@ -124,4 +124,9 @@ public class ScoreManager : MonoBehaviour
         comboTimer = 0;
         comboTimerText.text = "";
     }
+    
+    public int GetScore()
+    {
+        return score;
+    }
 }

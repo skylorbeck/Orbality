@@ -84,14 +84,14 @@ public class PegManager : MonoBehaviour
         }
     }
 
-    public void Reset(bool won)
+    public void Reset(bool randomize)
     {
         foreach (Transform child in transform)
         {
             child.GetComponent<PegScript>().Reset(_isSimulation);
         }
 
-        if (doRandomize && won)
+        if (doRandomize && randomize)
         {
             RandomizeAndSyncPegs();
         }
