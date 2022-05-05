@@ -25,8 +25,8 @@ public class PhysicsSimulator : MonoBehaviour
     public bool _previewing = true;
     private Transform _collidedBall;
     private Renderer _collidedBallRenderer;
-
-
+    
+    [SerializeField] private Material[] _trailMaterials;
     void Start()
     {
         _simScene = SceneManager.CreateScene("Simulation", new CreateSceneParameters(LocalPhysicsMode.Physics2D));
@@ -34,6 +34,7 @@ public class PhysicsSimulator : MonoBehaviour
         Physics.autoSimulation = false;
         _lineRenderer = GetComponent<LineRenderer>();
         _lineRenderer.positionCount = predictionLength;
+        SetGuideMaterial(SaveManager.Instance.GetGuideSkin());
         _simBall = Instantiate(ball.gameObject, ball.position, ball.rotation).transform;
         _simBall.gameObject.tag = "Simulated";
         _ballPC = ball.GetComponent<PlayerController>();
@@ -178,5 +179,14 @@ public class PhysicsSimulator : MonoBehaviour
         return _simBall;
     }
     
+    public void SetGuideMaterial(int index)
+    {
+        _lineRenderer.material = _trailMaterials[index];
+    }
     
+    public int GetGuideMaterialLength()
+    {
+        return _trailMaterials.Length;
+    }
+ 
 }

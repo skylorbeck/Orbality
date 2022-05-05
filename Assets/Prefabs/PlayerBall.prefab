@@ -111,6 +111,14 @@ MonoBehaviour:
   - {fileID: 21300000, guid: 4743f21a783322448ab8a9cbe0655699, type: 3}
   - {fileID: 21300000, guid: 3433e1643f2039a409bc03af0848201d, type: 3}
   - {fileID: 21300000, guid: 13271595f78e47b47925f1da238cce1b, type: 3}
+  _materials:
+  - {fileID: 2100000, guid: f6be028b676395e45a22438313bcad14, type: 2}
+  - {fileID: 2100000, guid: c8691699eac7340408cc7382286b05ae, type: 2}
+  - {fileID: 2100000, guid: 0834390be17e90b49bae37182ce42069, type: 2}
+  _visualEffects:
+  - {fileID: 8926484042661614526, guid: 26c71c991d5672540b1e7b2ca78fedda, type: 3}
+  - {fileID: 8926484042661614526, guid: c4324e361544d9d408902b18210b8fb0, type: 3}
+  - {fileID: 8926484042661614526, guid: f5aab8094b97ed746b3ae6d47eed5134, type: 3}
   awake: 0
   hasShot: 0
   waitTime: 0

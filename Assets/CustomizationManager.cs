@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -19,17 +20,23 @@ public class CustomizationManager : MonoBehaviour
     [SerializeField] TextMeshProUGUI _particleText;
     [SerializeField] TextMeshProUGUI _colliderText;
     
-    [SerializeField] PlayerPreviewer _ballPreviewer;
+    [SerializeField] private PlayerPreviewer _ballPreviewer;
+    [SerializeField] private PhysicsSimulator _physicsSimulator;
+    [SerializeField] private GameObject CollidersCollection;
 
     // Start is called before the first frame update
     void Start()
     {
         _currentBall = SaveManager.Instance.GetBallSkin();
         _ballText.text = _currentBall.ToString();
-        ChangeGuideSkin(SaveManager.Instance.GetGuideSkin());
-        ChangeGlowSkin(SaveManager.Instance.GetGlowSkin());
-        ChangeParticleSkin(SaveManager.Instance.GetParticleSkin());
-        ChangeColliderSkin(SaveManager.Instance.GetColliderSkin());
+        _currentGuide = SaveManager.Instance.GetGuideSkin();
+        _guideText.text = _currentGuide.ToString();
+        _currentGlow = SaveManager.Instance.GetGlowSkin();
+        _glowText.text = _currentGlow.ToString();
+        _currentParticle = SaveManager.Instance.GetParticleSkin();
+        _particleText.text = _currentParticle.ToString();
+        _currentCollider = SaveManager.Instance.GetColliderSkin();
+        _colliderText.text = _currentCollider.ToString();
     }
 
     // Update is called once per frame
@@ -49,31 +56,38 @@ public class CustomizationManager : MonoBehaviour
         _currentBall = Math.Clamp(skin, 0, _ballPreviewer.TextureCount()-1);
         _ballText.text = _currentBall.ToString();
         _ballPreviewer.SetBallSkin(_currentBall);
-    
     }
 
     public void ChangeGuideSkin(int skin)
     {
-        _currentGuide = Math.Clamp(skin, 0, 3);
+        _currentGuide = Math.Clamp(skin, 0, _physicsSimulator.GetGuideMaterialLength()-1);
         _guideText.text = _currentGuide.ToString();
+        _physicsSimulator.SetGuideMaterial(_currentGuide);
     }
 
     public void ChangeGlowSkin(int skin)
     {
-        _currentGlow = Math.Clamp(skin, 0, 3);
+        _currentGlow = Math.Clamp(skin, 0, _ballPreviewer.GlowCount()-1);
         _glowText.text = _currentGlow.ToString();
+        _ballPreviewer.SetGlow(_currentGlow);
+        _ballPreviewer.SetSimulation();
     }
 
     public void ChangeParticleSkin(int skin)
     {
-        _currentParticle = Math.Clamp(skin, 0, 3);
+        _currentParticle = Math.Clamp(skin, 0, _ballPreviewer.VisualEffectCount()-1);
         _particleText.text = _currentParticle.ToString();
+        _ballPreviewer.SetVFX(_currentParticle);
     }
 
     public void ChangeColliderSkin(int skin)
     {
-        _currentCollider = Math.Clamp(skin, 0, 3); ;
+        _currentCollider = Math.Clamp(skin, 0, 2);
         _colliderText.text = _currentCollider.ToString();
+       foreach (CollidableObject co in CollidersCollection.GetComponentsInChildren<CollidableObject>())
+       {
+           co.SetSkinIndex(_currentCollider);
+       }
     }
 
     public void SaveCustomization()
@@ -104,13 +118,11 @@ public class CustomizationManager : MonoBehaviour
     public void ChangeGuideSkin(bool increase)
     {
         ChangeGuideSkin(_currentGuide + (increase ? 1 : -1));
-        Math.Clamp(_currentGuide, 0, 3);
     }
 
     public void ChangeGlowSkin(bool increase)
     {
         ChangeGlowSkin(_currentGlow + (increase ? 1 : -1));
-        Math.Clamp(_currentGlow, 0, 3);
     }
 
     public void ChangeParticleSkin(bool increase)

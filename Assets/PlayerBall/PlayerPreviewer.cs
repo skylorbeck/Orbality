@@ -16,6 +16,8 @@ public class PlayerPreviewer : BallAbstraction
     {
         base.Start();
         _rb.Sleep();
+        SetSimulation();
+
     }
 
     void Update()

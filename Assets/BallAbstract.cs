@@ -20,6 +20,8 @@
         protected Material _material;
         protected VisualEffect _vfx;
         [SerializeField] protected Sprite[] _textures;
+        [SerializeField] protected Material[] _materials;
+        [SerializeField] protected VisualEffectAsset[] _visualEffects;
         protected bool _collided;
         protected Vector2 _collisionPoint = Vector2.zero;
         protected Rigidbody2D _rb;
@@ -33,10 +35,13 @@
             _rb = GetComponent<Rigidbody2D>();
             startingPos = transform.position;
             _renderer = GetComponent<SpriteRenderer>();
-            SetBallSkin(_textureIndex = SaveManager.Instance.GetBallSkin());
             _material = _renderer.material;
             _vfx = GetComponent<VisualEffect>();
             _isSimulated = CompareTag("Simulated");
+            _textureIndex = SaveManager.Instance.GetBallSkin();
+            SetGlow(SaveManager.Instance.GetGlowSkin());
+            SetVFX(SaveManager.Instance.GetParticleSkin());
+
         }
 
         protected void SetForce()
@@ -58,6 +63,28 @@
             _renderer.sprite = _textures[_textureIndex];
             _material.SetTexture("_MainTex", _textures[_textureIndex].texture);
            
+        }
+
+        public void SetGlow(int glow)
+        {
+            if (_renderer == null)
+            {
+                _renderer = GetComponent<SpriteRenderer>();
+            }
+            if (_isSimulated) return;
+                _renderer.material = _materials[glow];
+                _material = _renderer.material;
+                SetBallSkin(_textureIndex);
+        }
+
+        public void SetVFX(int vfx)
+        {
+            if (_vfx == null)
+            {
+                _vfx = GetComponent<VisualEffect>();
+            }
+            if (_isSimulated) return;
+            _vfx.visualEffectAsset = _visualEffects[vfx];
         }
 
         public Vector2 GetCollisionPoint()
@@ -101,6 +128,15 @@
         public int TextureCount()
         {
             return _textures.Length;
+        }
+        
+        public int GlowCount()
+        {
+            return _materials.Length;
+        }        
+        public int VisualEffectCount()
+        {
+            return _visualEffects.Length;
         }
         
         public enum HitBoxType

@@ -137,6 +137,14 @@ MonoBehaviour:
   collidedBall: {fileID: 1945782612465400213, guid: 23c3d8ec39907254193b5e89b5f8aca1, type: 3}
   predictionLength: 50
   _previewing: 1
+  _trailMaterials:
+  - {fileID: 2100000, guid: 122e6c531fd52de4d95d119bd9b8e511, type: 2}
+  - {fileID: 2100000, guid: 66796723ed966f84ea0f00f3f2302fb0, type: 2}
+  - {fileID: 2100000, guid: 02f6fd535f4f71d4fa248b581de9801f, type: 2}
+  _colliderSprites:
+  - {fileID: 7482667652216324306, guid: db64e7fbcab70ec41a2c5d2371032ff0, type: 3}
+  - {fileID: -2413806693520163455, guid: 34aeea8c6d01d7842b332a0333642ae9, type: 3}
+  - {fileID: 2747690628134850419, guid: 787175a703d2470418c0f9f5c61b2f64, type: 3}
 --- !u!120 &4795901223574933076
 LineRenderer:
   m_ObjectHideFlags: 0
