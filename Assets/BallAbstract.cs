@@ -19,7 +19,6 @@
         protected float _torque = 0f;
         protected Material _material;
         protected VisualEffect _vfx;
-        [SerializeField] protected Sprite[] _textures;
         [SerializeField] protected Material[] _materials;
         [SerializeField] protected VisualEffectAsset[] _visualEffects;
         protected bool _collided;
@@ -60,8 +59,8 @@
             _textureIndex = skin;
             if (_isSimulated) return;
 
-            _renderer.sprite = _textures[_textureIndex];
-            _material.SetTexture("_MainTex", _textures[_textureIndex].texture);
+            _renderer.sprite =  Resources.Load<Sprite>("ball/" + _textureIndex);
+            _material.SetTexture("_MainTex",_renderer.sprite.texture);
            
         }
 
@@ -125,10 +124,6 @@
             return _textureIndex;
         }
         
-        public int TextureCount()
-        {
-            return _textures.Length;
-        }
         
         public int GlowCount()
         {

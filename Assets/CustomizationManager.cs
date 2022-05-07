@@ -53,7 +53,7 @@ public class CustomizationManager : MonoBehaviour
 
     public void ChangeBallSkin(int skin)
     {
-        _currentBall = Math.Clamp(skin, 0, _ballPreviewer.TextureCount()-1);
+        _currentBall = Math.Clamp(skin, 0,3);
         _ballText.text = _currentBall.ToString();
         _ballPreviewer.SetBallSkin(_currentBall);
     }
@@ -84,7 +84,7 @@ public class CustomizationManager : MonoBehaviour
     {
         _currentCollider = Math.Clamp(skin, 0, 2);
         _colliderText.text = _currentCollider.ToString();
-       foreach (CollidableObject co in CollidersCollection.GetComponentsInChildren<CollidableObject>())
+       foreach (SkinnableObject co in CollidersCollection.GetComponentsInChildren<SkinnableObject>())
        {
            co.SetSkinIndex(_currentCollider);
        }

@@ -31,7 +31,7 @@ Transform:
   m_GameObject: {fileID: 5127753680464656680}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -12, y: 0, z: 0}
-  m_LocalScale: {x: 5, y: 5, z: 1}
+  m_LocalScale: {x: 2, y: 2, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
@@ -78,7 +78,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: 4743f21a783322448ab8a9cbe0655699, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 84305845d53f17c4f94b0a91db780c68, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -128,10 +128,6 @@ MonoBehaviour:
   multiplier: 5
   maxLen: 1000
   physicsSimulator: {fileID: 0}
-  _textures:
-  - {fileID: 21300000, guid: 4743f21a783322448ab8a9cbe0655699, type: 3}
-  - {fileID: 21300000, guid: 3433e1643f2039a409bc03af0848201d, type: 3}
-  - {fileID: 21300000, guid: 13271595f78e47b47925f1da238cce1b, type: 3}
   _materials:
   - {fileID: 2100000, guid: f6be028b676395e45a22438313bcad14, type: 2}
   - {fileID: 2100000, guid: c8691699eac7340408cc7382286b05ae, type: 2}
@@ -244,4 +240,4 @@ CircleCollider2D:
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
-  m_Radius: 0.16
+  m_Radius: 0.475
