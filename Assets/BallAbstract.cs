@@ -19,15 +19,13 @@
         protected float _torque = 0f;
         protected Material _material;
         protected VisualEffect _vfx;
-        [SerializeField] protected Material[] _materials;
-        [SerializeField] protected VisualEffectAsset[] _visualEffects;
         protected bool _collided;
         protected Vector2 _collisionPoint = Vector2.zero;
         protected Rigidbody2D _rb;
         protected bool _isSimulated = false;
         protected SpriteRenderer _renderer;
         protected int _textureIndex = 0;
-
+        protected float _materialScore = 0f;
         protected void Start()
         {
             _cam = Camera.main;
@@ -56,12 +54,13 @@
                 _renderer = GetComponent<SpriteRenderer>();
                 _material = _renderer.material;
             }
+
             _textureIndex = skin;
             if (_isSimulated) return;
 
-            _renderer.sprite =  Resources.Load<Sprite>("ball/" + _textureIndex);
-            _material.SetTexture("_MainTex",_renderer.sprite.texture);
-           
+            _renderer.sprite = Resources.Load<Sprite>("ball/" + _textureIndex);
+            _material.SetTexture("_MainTex", _renderer.sprite.texture);
+            _material.SetFloat("_Score", _materialScore);
         }
 
         public void SetGlow(int glow)
@@ -70,10 +69,11 @@
             {
                 _renderer = GetComponent<SpriteRenderer>();
             }
+
             if (_isSimulated) return;
-                _renderer.material = _materials[glow];
-                _material = _renderer.material;
-                SetBallSkin(_textureIndex);
+            _renderer.material = Resources.Load<Material>("Energy/" + glow);
+            _material = _renderer.material;
+            SetBallSkin(_textureIndex);
         }
 
         public void SetVFX(int vfx)
@@ -82,8 +82,9 @@
             {
                 _vfx = GetComponent<VisualEffect>();
             }
+
             if (_isSimulated) return;
-            _vfx.visualEffectAsset = _visualEffects[vfx];
+            _vfx.visualEffectAsset = Resources.Load<VisualEffectAsset>("Effects/" + vfx);
         }
 
         public Vector2 GetCollisionPoint()
@@ -102,6 +103,7 @@
             _collided = collided;
         }
 
+    
         public void SetSimulation()
         {
             _isSimulated = CompareTag("Simulated");
@@ -114,30 +116,14 @@
             }
 
             _material = GetComponent<SpriteRenderer>().material;
-            _material.SetFloat("_Score", 10);
-            _vfx.SetInt("Multiplier", 5);
-            _vfx.SetFloat("Velocity", 5);
+ 
         }
 
-        public int GetTextureIndex()
+        public void SetMaterialScore(int scale)
         {
-            return _textureIndex;
-        }
-        
-        
-        public int GlowCount()
-        {
-            return _materials.Length;
-        }        
-        public int VisualEffectCount()
-        {
-            return _visualEffects.Length;
-        }
-        
-        public enum HitBoxType
-        {
-            Circle,
-            Capsule,
-            Box
+            _materialScore = scale * 0.05f;
+            _material.SetFloat("_Score", _materialScore);
+            _vfx.SetInt("Multiplier",1);
+            _vfx.SetFloat("Velocity", scale*0.5f);
         }
     }

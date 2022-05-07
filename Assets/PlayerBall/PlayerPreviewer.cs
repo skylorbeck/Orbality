@@ -14,10 +14,10 @@ public class PlayerPreviewer : BallAbstraction
 
     new void Start()
     {
+        _materialScore = 0.5f;
         base.Start();
         _rb.Sleep();
         SetSimulation();
-
     }
 
     void Update()
@@ -40,4 +40,6 @@ public class PlayerPreviewer : BallAbstraction
             _collisionPoint = transform.position;
         }
     }
+    
+    
 }

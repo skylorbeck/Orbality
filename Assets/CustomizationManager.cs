@@ -53,21 +53,21 @@ public class CustomizationManager : MonoBehaviour
 
     public void ChangeBallSkin(int skin)
     {
-        _currentBall = Math.Clamp(skin, 0,3);
+        _currentBall = Math.Clamp(skin, 0,2);
         _ballText.text = _currentBall.ToString();
         _ballPreviewer.SetBallSkin(_currentBall);
     }
 
     public void ChangeGuideSkin(int skin)
     {
-        _currentGuide = Math.Clamp(skin, 0, _physicsSimulator.GetGuideMaterialLength()-1);
+        _currentGuide = Math.Clamp(skin, 0, 2);
         _guideText.text = _currentGuide.ToString();
         _physicsSimulator.SetGuideMaterial(_currentGuide);
     }
 
     public void ChangeGlowSkin(int skin)
     {
-        _currentGlow = Math.Clamp(skin, 0, _ballPreviewer.GlowCount()-1);
+        _currentGlow = Math.Clamp(skin, 0, 2);
         _glowText.text = _currentGlow.ToString();
         _ballPreviewer.SetGlow(_currentGlow);
         _ballPreviewer.SetSimulation();
@@ -75,7 +75,7 @@ public class CustomizationManager : MonoBehaviour
 
     public void ChangeParticleSkin(int skin)
     {
-        _currentParticle = Math.Clamp(skin, 0, _ballPreviewer.VisualEffectCount()-1);
+        _currentParticle = Math.Clamp(skin, 0, 2);
         _particleText.text = _currentParticle.ToString();
         _ballPreviewer.SetVFX(_currentParticle);
     }
@@ -128,13 +128,11 @@ public class CustomizationManager : MonoBehaviour
     public void ChangeParticleSkin(bool increase)
     {
         ChangeParticleSkin(_currentParticle + (increase ? 1 : -1));
-        Math.Clamp(_currentParticle, 0, 3);
     }
 
     public void ChangeColliderSkin(bool increase)
     {
         ChangeColliderSkin(_currentCollider + (increase ? 1 : -1));
-        Math.Clamp(_currentCollider, 0, 3);
     }
 
     public int GetCurrentBallSkin()
@@ -160,5 +158,10 @@ public class CustomizationManager : MonoBehaviour
     public int GetCurrentColliderSkin()
     {
         return _currentCollider;
+    }
+    
+    public void SetScore(Slider slider)
+    {
+        _ballPreviewer.SetMaterialScore((int)slider.value);
     }
 }

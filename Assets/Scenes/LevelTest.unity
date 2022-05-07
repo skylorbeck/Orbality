@@ -670,12 +670,20 @@ PrefabInstance:
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5196114170075156259, guid: e852aaff56697e34ebd9bb277da61154, type: 3}
+      propertyPath: maxLen
+      value: 1500
+      objectReference: {fileID: 0}
+    - target: {fileID: 5196114170075156259, guid: e852aaff56697e34ebd9bb277da61154, type: 3}
       propertyPath: physicsSimulator
       value: 
       objectReference: {fileID: 337829447}
     - target: {fileID: 5196114170075156270, guid: e852aaff56697e34ebd9bb277da61154, type: 3}
       propertyPath: m_Name
       value: PlayerBall
+      objectReference: {fileID: 0}
+    - target: {fileID: 5196114170075156271, guid: e852aaff56697e34ebd9bb277da61154, type: 3}
+      propertyPath: m_Mass
+      value: 2.8352873
       objectReference: {fileID: 0}
     - target: {fileID: 8497376232421225709, guid: e852aaff56697e34ebd9bb277da61154, type: 3}
       propertyPath: m_Enabled
@@ -1779,8 +1787,8 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 24
-  m_fontSizeBase: 24
+  m_fontSize: 64
+  m_fontSizeBase: 64
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
@@ -2109,7 +2117,7 @@ Canvas:
   m_SortingBucketNormalizedSize: 0
   m_AdditionalShaderChannelsFlag: 25
   m_SortingLayerID: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 1
   m_TargetDisplay: 0
 --- !u!224 &1446669579
 RectTransform:

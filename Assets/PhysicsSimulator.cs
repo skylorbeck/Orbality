@@ -26,7 +26,6 @@ public class PhysicsSimulator : MonoBehaviour
     private Transform _collidedBall;
     private Renderer _collidedBallRenderer;
     
-    [SerializeField] private Material[] _trailMaterials;
     void Start()
     {
         _simScene = SceneManager.CreateScene("Simulation", new CreateSceneParameters(LocalPhysicsMode.Physics2D));
@@ -181,12 +180,7 @@ public class PhysicsSimulator : MonoBehaviour
     
     public void SetGuideMaterial(int index)
     {
-        _lineRenderer.material = _trailMaterials[index];
+        _lineRenderer.material = Resources.Load<Material>("Guide/" + index);
     }
     
-    public int GetGuideMaterialLength()
-    {
-        return _trailMaterials.Length;
-    }
- 
 }

@@ -46,7 +46,7 @@ public class PlayerController : BallAbstraction
     void Update()
     {
         SetForce();
-        _vfx.SetFloat("Velocity", Math.Max( _rb.velocity.magnitude,1f));
+        _vfx.SetFloat("Velocity", Math.Max( _rb.velocity.magnitude*0.5f,1f));
 
         if (!GetAwake())
         {
@@ -113,9 +113,9 @@ public class PlayerController : BallAbstraction
         _rb.rotation = 0;
         _rb.angularVelocity = 0;
         waitTime = 0f;
-        float score = ScoreManager.Instance.combo * 0.1f;
+        float score = ScoreManager.Instance.combo * 0.05f;
         _material.SetFloat("_Score", score);
-        _vfx.SetInt("Multiplier", ScoreManager.Instance.combo-1);
+        _vfx.SetInt("Multiplier", (int)((ScoreManager.Instance.combo)*0.25f));
     }
     
     public void RandomizeStartingPos()
